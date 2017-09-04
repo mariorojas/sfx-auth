@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header" />
+	
+	<div class="container">
+		<div class="page-header">
+			<h1 th:inline="text">Perfil de <span sec:authentication="name"></span></h1>
+		</div>
+		<h2>Modifica tus propiedades</h2>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

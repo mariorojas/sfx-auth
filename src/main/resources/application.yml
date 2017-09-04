@@ -1,0 +1,16 @@
+logging:
+  file: auth.log
+server:
+  port: 8081
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: sfinx*2017
+    url: jdbc:postgresql://localhost:5432/OAUTH?currentSchema=aut
+    username: sfinx_aut
+  jackson:
+    serialization:
+      indent-output: true
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false

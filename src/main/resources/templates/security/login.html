@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Inicio de sesi&oacute;n</h3>
+					</div>
+					<div class="panel-body">
+						<div th:if="${param.error}" class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							El usuario o clave son incorrectas, verifique sus datos.
+						</div>
+						<div th:if="${param.logout}" class="alert alert-info alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							La sesi&oacute;n se ha cerrado correctamente.
+						</div>
+						<form th:action="@{/login}" method="post" class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-md-2">Usuario</label>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="username" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-2">Clave</label>
+								<div class="col-md-10">
+									<input type="password" class="form-control" name="password" />
+								</div>
+							</div>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+							<div class="form-group">
+								<div class="col-md-10 col-md-offset-2">
+									<input type="submit" class="btn btn-primary btn-lg btn-block" name="login" value="Acceder" />
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header" />
+	
+	<div class="container">
+		<div class="page-header">
+			<h1 th:inline="text">Clientes</h1>
+		</div>
+		
+		<div sec:authorize="hasRole('ROLE_OAUTH_ADMIN')">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>ID Cliente</th>
+						<th>IDs Recursos</th>
+						<th>Permisos</th>
+						<th>Tipos de autenticación con apl</th>
+						<th>Roles autorizados</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="client : ${clients}">
+						<td th:text="${client.clientId}"></td>
+						<td th:text="${client.resourceIds}"></td>
+						<td th:text="${client.scope}"></td>
+	                    <td th:text="${client.authorizedGrantTypes}"></td>
+	                    <td th:text="${client.authorities}"></td>
+	                    <td>
+	                    	<a class="btn btn-default btn-xs" th:href="@{/clients/form(client=${client.clientId})}">
+	                    		<span class="glyphicon glyphicon-edit"></span>
+	                    	</a>
+	                    	<a class="btn btn-default btn-xs" th:href="@{/clients/delete(client=${client.clientId})}">
+	                    		<span class="glyphicon glyphicon-trash"></span>
+	                    	</a>
+	                    </td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="6">
+							<a th:href="@{/clients/form}" class="btn btn-default btn-xs pull-right">
+								<span class="glyphicon glyphicon-plus"></span> Agregar cliente</a>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

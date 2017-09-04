@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div th:fragment="header-css">
+		<title>P&aacute;gina de ejemplo</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+		<link rel="stylesheet" th:href="@{/css/main.css}" />
+	</div>
+</head>
+<body>
+	<div th:fragment="header">
+		<div class="navbar navbar-fixed-top navbar-inverse">
+			<div class="container-fluid">
+	    		<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" th:href="@{/}">Zrqa</a>
+	    		</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+		        		<li><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span></a></li>
+		        		<li><a th:href="@{/approvals}" sec:authorize="isAuthenticated()">Aprobaciones</a></li>
+		        		<li><a th:href="@{/clients}" sec:authorize="hasRole('ROLE_OAUTH_ADMIN')">Clientes</a></li>
+		        		<li><a th:href="@{/authorities}" sec:authorize="hasRole('ROLE_OAUTH_ADMIN')">Roles</a></li>
+		        		<li><a th:href="@{/users}" sec:authorize="hasRole('ROLE_OAUTH_ADMIN')">Usuarios</a></li>
+		      		</ul>
+		      		<ul sec:authorize=" ! isAuthenticated()" class="nav navbar-nav navbar-right">
+		      			<li><a th:href="@{/profile}">Iniciar sesi&oacute;n</a></li>
+		      		</ul>
+					<ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
+						<li><a th:href="@{/profile}" sec:authentication="name"></a></li>
+						<li>
+							<form th:action="@{/logout}" method="post" class="navbar-form fixed-navbar-form">
+				      			<div class="form-group">
+				      				<button type="submit" class="btn btn-link" name="logout">
+				      					<span class="glyphicon glyphicon-off"></span>
+				      				</button>
+				      			</div>
+				      		</form>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

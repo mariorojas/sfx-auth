@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header" />
+	
+	<div class="container">
+		<div class="page-header">
+			<h1 th:inline="text">Aprobaciones de <span sec:authentication="name"></span></h1>
+		</div>
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Cliente</th>
+					<th>Permisos</th>
+					<th>Fecha de expiraci&oacute;n</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="approval : ${approvals}">
+					<td th:text="${approval.clientId}"></td>
+                    <td th:text="${approval.scope}"></td>
+                    <td th:text="${approval.expiresAt}"></td>
+                    <td>
+                        <form th:action="@{/approvals/revoke}" method="post">
+                        	<input type="hidden" name="userId" th:value="${approval.userId}"/>
+                            <input type="hidden" name="clientId" th:value="${approval.clientId}"/>
+                            <input type="hidden" name="scope" th:value="${approval.scope}"/>
+                            <input type="hidden" name="expiresAt" th:value="${#dates.format(approval.expiresAt, 'yyyy-MM-dd HH:mm:ss')}"/>
+                            <input type="hidden" name="status" th:value="${approval.status}"/>
+                            <input type="hidden" name="lastUpdatedAt" th:value="${#dates.format(approval.lastUpdatedAt, 'yyyy-MM-dd HH:mm:ss')}"/>
+                            <button type="submit" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </form>
+                    </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

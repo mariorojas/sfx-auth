@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header" />
+	
+	<div class="container">
+		<div class="page-header">
+			<h1 th:inline="text">Roles</h1>
+		</div>
+		
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${authorities}">
+					<td th:text="${item.id}"></td>
+					<td th:text="${item.authority}"></td>
+					<td>
+						<a class="btn btn-default btn-xs" th:href="@{/authorities/form(authority=${item.id})}">
+                    		<span class="glyphicon glyphicon-edit"></span>
+                    	</a>
+                    	<a th:href="@{/authorities/delete(authority=${item.id})}" class="btn btn-xs btn-default">
+                    		<span class="glyphicon glyphicon-trash"></span>
+                    	</a>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						<a th:href="@{/authorities/form}" class="btn btn-default btn-xs pull-right">
+							<span class="glyphicon glyphicon-plus"></span> Agregar rol</a>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

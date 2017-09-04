@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header" />
+	
+	<div class="container">
+		<div class="page-header">
+			<h1 th:inline="text">Usuarios</h1>
+		</div>
+		
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Estado</th>
+					<th>Opciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${users}">
+					<td th:text="${item.id}"></td>
+					<td th:text="${item.username}"></td>
+					
+					<td>
+						<span th:if="${item.enabled}" class="label label-success">Activo</span>
+						<span th:if="!${item.enabled}" class="label label-default">Inactivo</span>
+					</td>
+					
+					<!-- Opciones -->
+					<td>
+						<a th:if="!${item.enabled}" th:href="@{/users/status(user=${item.id},status='true')}" class="btn btn-xs btn-default">Activar</a>
+						<a th:if="${item.enabled}" th:href="@{/users/status(user=${item.id},status='false')}" class="btn btn-xs btn-default">Inactivar</a>
+						<a class="btn btn-default btn-xs" th:href="@{/users/form(user=${item.id})}">
+                    		<span class="glyphicon glyphicon-edit"></span>
+                    	</a>
+                    	<a th:href="@{/users/delete(user=${item.id})}" class="btn btn-xs btn-default">
+                    		<span class="glyphicon glyphicon-trash"></span>
+                    	</a>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						<a th:href="@{/users/form}" class="btn btn-default btn-xs pull-right">
+							<span class="glyphicon glyphicon-plus"></span> Agregar usuario</a>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

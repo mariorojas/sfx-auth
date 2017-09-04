@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header" />
+	
+	<div class="container">
+		<div class="page-header">
+			<h1 th:inline="text">Usuarios</h1>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-4">
+				<form th:action="@{/users/edit}" method="post">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+					<input type="hidden" th:name="id" th:value="${user.id}"/>
+					<!-- signalize new user -->
+					<div class="form-group">
+						<label for="username">Nombre de usuario</label>
+						<input type="text" name="username" id="username" class="form-control" th:value="${user.username}" />
+					</div>
+					<div class="form-group">
+						<label for="password">Contrase&ntilde;a</label>
+						<input type="password" name="password" id="password" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="password">Roles</label>
+						<div class="checkbox" th:each="authority : ${authorities}">
+							<label>
+								<input type="checkbox" name="userAuthorities" th:value="${authority.id}" th:field="*{user.authorities}"/> <span th:text="${authority.authority}"></span>
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block">
+							<span class="glyphicon glyphicon-floppy-save"></span> Guardar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer" />
+</body>
+</html>
